@@ -3,6 +3,7 @@ import RootLayout from "./pages/root";
 import HomePage from "./pages/HomePage";
 import UsersPage from "./pages/UsersPage";
 import FavoritesPage from "./pages/favoritesPage";
+import { usersLoader } from "./loaders/usersLoader";
 
 const routes: RouteObject[] = [
     {
@@ -10,7 +11,10 @@ const routes: RouteObject[] = [
         element: <RootLayout />,
         children: [
             { index: true, element: <HomePage /> },
-            { path: "users", element: <UsersPage /> },
+            { 
+                path: "users", element: <UsersPage />, 
+                loader: usersLoader 
+            },
             { path: "favorites", element: <FavoritesPage /> },
         ],
     },

@@ -1,9 +1,28 @@
+import { useLoaderData } from 'react-router-dom';
+
+interface UserProps {
+  id: number;
+  name: string;
+}
+
+export const usersLoader = async () => {
+  const response = await fetch("https://jsonplaceholder.typicode.com/users");
+  const users = await response.json();
+  return users;
+};
+
 function UsersPage() {
+  const users = useLoaderData() as UserProps[];
+
   return (
-    <div className="container mt-4">
+    <>
       <h1>Users</h1>
-      <p>Users page will be implemented here.</p>
-    </div>
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>{user.name}</li>
+        ))}
+      </ul>
+    </>
   );
 }
 
