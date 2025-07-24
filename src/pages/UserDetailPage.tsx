@@ -1,6 +1,4 @@
-import type { LoaderFunctionArgs } from "react-router-dom";
-import { useLoaderData } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useLoaderData, Link, Outlet, useParams, type LoaderFunctionArgs } from "react-router-dom";
 
 interface UserProps {
     id: number;
