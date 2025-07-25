@@ -17,6 +17,7 @@ interface CommentParams {
     body: string;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const postLoader = async ({ params }: LoaderFunctionArgs) => {
     const postResponse = await fetch(
         `https://jsonplaceholder.typicode.com/posts/${params.postId}`

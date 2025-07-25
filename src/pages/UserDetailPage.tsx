@@ -7,6 +7,7 @@ interface UserProps {
     username: string;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const userLoader = async ({ params }: LoaderFunctionArgs) => {
     const response = await fetch(`https://jsonplaceholder.typicode.com/users/${params.userId}`);
     const user = await response.json();

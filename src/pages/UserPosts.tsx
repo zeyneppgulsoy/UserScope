@@ -10,6 +10,8 @@ interface PostParams {
 }
 
 
+
+// eslint-disable-next-line react-refresh/only-export-components
 export const userPostsLoader = async ({ params }: LoaderFunctionArgs) => {
     const response = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${params.userId}`);
     const posts = await response.json();
