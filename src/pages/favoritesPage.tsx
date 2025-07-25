@@ -1,9 +1,25 @@
+import { Link } from "react-router-dom";
+import { useStore } from "../store/Store";
+
 function FavoritesPage() {
+  const { favorites, removeFavorites } = useStore();
+
   return (
-    <div className="container mt-4">
-      <h1>Favorites</h1>
-      <p>Favorites page will be implemented here.</p>
-    </div>
+    <>
+      <h2>Favorites</h2>
+      <ul>
+        {favorites.map((photo) => (
+          <li key={photo.id}>
+            <img src={photo.thumbnailUrl} />
+            <p>{photo.title}</p>
+            <p>
+              by User: <Link to={`/users/${photo.userId}`}>{photo.userId}</Link>
+            </p>
+            <button onClick={() => removeFavorites(photo.id)}>Remove</button>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
 
