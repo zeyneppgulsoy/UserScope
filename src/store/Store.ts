@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface StorePhotoParams {
+export interface StorePhotoParams {
     albumId: number;
     id: number;
     title: string;
