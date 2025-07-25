@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom';
 import { useStore } from '../store/Store';
 
 function NavigationBar() {
-  const { favorites } = useStore();
+  const { favorites, favoritePosts } = useStore();
+  const totalFavorites = favorites.length + favoritePosts.length;
+  
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -15,7 +17,7 @@ function NavigationBar() {
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
             <Nav.Link as={Link} to="/users">Users</Nav.Link>
-            <Nav.Link as={Link} to="/favorites">Favorites ({favorites.length})</Nav.Link>
+            <Nav.Link as={Link} to="/favorites">Favorites ({totalFavorites})</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -1,4 +1,4 @@
-import { createBrowserRouter, type RouteObject } from "react-router-dom";
+import { createBrowserRouter, type RouteObject, Navigate } from "react-router-dom";
 import RootLayout from "./pages/root";
 import HomePage from "./pages/HomePage";
 import UsersPage from "./pages/UsersPage";
@@ -6,9 +6,9 @@ import FavoritesPage from "./pages/favoritesPage";
 import UserDetailPage, { userLoader } from "./pages/UserDetailPage";
 import UserPosts from "./pages/UserPosts";
 import UserAlbums, { userAlbumsLoader } from "./pages/UserAlbums";
-import UserTodos from "./pages/UserTodos";
+import UserTodos, { userTodosLoader } from "./pages/UserTodos";
 import { userPostsLoader } from "./pages/UserPosts";
-import UserPostDetail from "./pages/PostDetailPage";
+import UserPostDetail, { postLoader } from "./pages/PostDetailPage";
 import AlbumDetailPage, { albumLoader } from "./pages/AlbumDetailPage";
 import { usersLoader } from "./pages/UsersPage";
 
@@ -31,10 +31,11 @@ const routes: RouteObject[] = [
 
                 loader: userLoader,
                 children: [
+                    { index: true, element: <Navigate to="posts" replace /> },
                     { path: "posts", element: <UserPosts />,
                         loader: userPostsLoader,
                         children: [
-                            { path: ":postId", element: <UserPostDetail /> },
+                            { path: ":postId", element: <UserPostDetail />, loader: postLoader },
                         ] 
                     },
                     { path: "albums", element: <UserAlbums />,
@@ -43,7 +44,7 @@ const routes: RouteObject[] = [
                             { path: ":albumId", element: <AlbumDetailPage />, loader: albumLoader },
                         ]
                     },
-                    { path: "todos", element: <UserTodos /> },
+                    { path: "todos", element: <UserTodos />, loader: userTodosLoader },
                 ]
             },
         ],
