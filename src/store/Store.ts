@@ -1,10 +1,19 @@
 import { create } from "zustand";
-import type { PhotoParams } from "../pages/AlbumDetailPage";
 import { persist } from "zustand/middleware";
 
+interface StorePhotoParams {
+    albumId: number;
+    id: number;
+    title: string;
+    url: string;
+    thumbnailUrl: string;
+    userId: number;
+  }
+  
+
 interface Store {
-  favorites: PhotoParams[];
-  addFavorite: (photo: PhotoParams) => void;
+  favorites: StorePhotoParams[];
+  addFavorite: (photo: StorePhotoParams) => void;
   removeFavorites: (id: number) => void;
 }
 
@@ -12,7 +21,7 @@ export const useStore = create<Store>()(
   persist<Store>(
     (set) => ({
       favorites: [],
-      addFavorite: (photo: PhotoParams) =>
+      addFavorite: (photo: StorePhotoParams) =>
         set((state) => ({
           favorites: [...state.favorites, photo],
         })),
