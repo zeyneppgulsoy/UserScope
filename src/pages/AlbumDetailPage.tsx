@@ -1,5 +1,6 @@
 import { useLoaderData } from 'react-router-dom'
 import type { LoaderFunctionArgs } from 'react-router-dom'
+import { useStore } from '../store/Store';
 
 export interface PhotoParams {
   albumId: number;
@@ -20,6 +21,7 @@ export const albumLoader = async ({ params }: LoaderFunctionArgs) => {
 
 function AlbumDetailPage() {
   const photos = useLoaderData() as PhotoParams[];
+  const { favorites, addFavorite, removeFavorites } = useStore();
 
   return (
     <>
