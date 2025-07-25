@@ -1,7 +1,7 @@
 import { useLoaderData } from 'react-router-dom'
 import type { LoaderFunctionArgs } from 'react-router-dom'
 
-interface PhotoParams {
+export interface PhotoParams {
   albumId: number;
   id: number;
   title: string;
