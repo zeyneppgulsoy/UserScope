@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useStore } from "../store/Store";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Heart, Trash2, Images, FileText, Camera } from "lucide-react";
+import { Heart, Trash2, FileText, Camera } from "lucide-react";
 
 function FavoritesPage() {
   const { favorites, favoritePosts, removeFavorites, removeFavoritePost } = useStore();

@@ -8,7 +8,7 @@ import { ThemeProvider } from './components/theme-provider'
 
 
 createRoot(document.getElementById('root')!).render(
-  <ThemeProvider attribute="class" defaultTheme="system" enableSystem suppressHydrationWarning storageKey="theme">
+  <ThemeProvider attribute="class" defaultTheme="system" enableSystem storageKey="theme">
     <RouterProvider router={router} />
   </ThemeProvider>
 )
