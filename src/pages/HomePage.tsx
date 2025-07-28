@@ -7,33 +7,33 @@ function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-950 dark:via-slate-900 dark:to-blue-900 transition-colors duration-300">
       {/* Hero Section */}
-             <div className="container mx-auto px-4 py-16 relative z-10">
+             <div className="container mx-auto px-4 py-8 sm:py-12 lg:py-16 relative z-10">
         <div className="text-center mb-16">
-          <h1 className="text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 dark:from-blue-400 dark:via-purple-400 dark:to-indigo-400 bg-clip-text text-transparent mb-6">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 dark:from-blue-400 dark:via-purple-400 dark:to-indigo-400 bg-clip-text text-transparent mb-6">
             UserScope
           </h1>
-          <p className="text-xl text-gray-600 dark:text-blue-200 mb-2 max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl text-gray-600 dark:text-blue-200 mb-2 max-w-2xl mx-auto px-4">
             Advanced JSON Placeholder API Interface
           </p>
-          <p className="text-gray-500 dark:text-blue-300 mb-8 max-w-xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-500 dark:text-blue-300 mb-8 max-w-xl mx-auto px-4">
             Explore users, manage favorites, and interact with posts, albums, and todos in a beautiful, modern interface.
           </p>
           
-                     <div className="flex gap-4 justify-center">
-             <Button size="lg" asChild className="dark:bg-blue-600 dark:hover:bg-blue-700">
-               <Link to="/users" className="flex items-center gap-2">
-                 <Users size={20} />
-                 Explore Users
-                 <ArrowRight size={16} />
-               </Link>
-             </Button>
-             <Button variant="outline" size="lg" asChild className="dark:bg-blue-600 dark:text-white dark:border-blue-600 dark:hover:bg-blue-700">
-               <Link to="/favorites" className="flex items-center gap-2">
-                 <Heart size={20} />
-                 View Favorites
-               </Link>
-             </Button>
-           </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4">
+            <Button size="lg" asChild className="w-full sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700">
+              <Link to="/users" className="flex items-center justify-center gap-2">
+                <Users size={20} />
+                Explore Users
+                <ArrowRight size={16} />
+              </Link>
+            </Button>
+            <Button variant="outline" size="lg" asChild className="w-full sm:w-auto dark:bg-blue-600 dark:text-white dark:border-blue-600 dark:hover:bg-blue-700">
+              <Link to="/favorites" className="flex items-center justify-center gap-2">
+                <Heart size={20} />
+                View Favorites
+              </Link>
+            </Button>
+          </div>
         </div>
 
         {/* Features Grid */}
