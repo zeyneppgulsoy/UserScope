@@ -1,5 +1,7 @@
 import { useLoaderData, Outlet, useParams, useNavigate, useLocation, type LoaderFunctionArgs } from "react-router-dom";
-import { Tab, Tabs } from 'react-bootstrap';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { User, Mail, AtSign } from "lucide-react";
 
 interface UserProps {
     id: number;
@@ -30,35 +32,48 @@ function UserDetailPage() {
         return 'posts'; // default to posts tab
     };
 
-    const handleTabSelect = (tab: string | null) => {
+    const handleTabSelect = (tab: string) => {
         if (tab && userId) {
             navigate(`/users/${userId}/${tab}`);
         }
     };
 
     return (
-        <div className="container mt-4">
-            <div className="mb-4">
-                <h2>{user.name}</h2>
-                <p>Username: {user.username}</p>
-                <p>Email: {user.email}</p>
-            </div>
+        <div className="container mx-auto px-4 py-8">
+            {/* User Info Card */}
+            <Card className="mb-8">
+                <CardHeader>
+                    <div className="flex items-center gap-4">
+                        <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full">
+                            <User className="h-6 w-6 text-white" />
+                        </div>
+                        <div>
+                            <CardTitle className="text-2xl">{user.name}</CardTitle>
+                            <CardDescription className="flex items-center gap-4 mt-2">
+                                <span className="flex items-center gap-1">
+                                    <AtSign className="h-4 w-4" />
+                                    {user.username}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                    <Mail className="h-4 w-4" />
+                                    {user.email}
+                                </span>
+                            </CardDescription>
+                        </div>
+                    </div>
+                </CardHeader>
+            </Card>
             
-            <Tabs
-                activeKey={getActiveTab()}
-                onSelect={handleTabSelect}
-                id="user-detail-tabs"
-                className="mb-3"
-            >
-                <Tab eventKey="posts" title="Posts">
+            {/* Tabs */}
+            <Tabs value={getActiveTab()} onValueChange={handleTabSelect} className="w-full">
+                <TabsList className="grid w-full grid-cols-3">
+                    <TabsTrigger value="posts">Posts</TabsTrigger>
+                    <TabsTrigger value="albums">Albums</TabsTrigger>
+                    <TabsTrigger value="todos">Todos</TabsTrigger>
+                </TabsList>
+                <TabsContent value={getActiveTab()} className="mt-6">
                     <Outlet />
-                </Tab>
-                <Tab eventKey="albums" title="Albums">
-                    <Outlet />
-                </Tab>
-                <Tab eventKey="todos" title="Todos">
-                    <Outlet />
-                </Tab>
+                </TabsContent>
             </Tabs>
         </div>
     );

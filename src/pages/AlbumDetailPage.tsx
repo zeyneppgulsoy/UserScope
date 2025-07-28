@@ -1,6 +1,9 @@
 import { useLoaderData, useParams, Link } from 'react-router-dom'
 import type { LoaderFunctionArgs } from 'react-router-dom'
 import { useStore } from '../store/Store';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Heart, ArrowLeft, Camera, User, Image } from "lucide-react";
 
 export interface PhotoParams {
   albumId: number;
@@ -59,37 +62,117 @@ function AlbumDetailPage() {
     }
   }
 
-  return (
-    <div className="container mt-4">
-      <div className="card mb-4">
-        <div className="card-body">
-          <h2 className="card-title">{album.title}</h2>
-          <p className="text-muted">
-            by <Link to={`/users/${user.id}`} className="text-decoration-none">
-              {user.name} (@{user.username})
-            </Link>
-          </p>
-        </div>
-      </div>
+  const isFavorited = (photoId: number) => favorites.some((f) => f.id === photoId);
 
-      <h3>Photos</h3>
-      <div className="row">
-        {photos.map((photo) => (
-          <div key={photo.id} className="col-md-4 mb-4">
-            <div className="card">
-              <img src={photo.thumbnailUrl} className="card-img-top" alt={photo.title} />
-              <div className="card-body">
-                <p className="card-text">{photo.title}</p>
-                <button 
-                  className={`btn btn-sm ${favorites.some((f) => f.id === photo.id) ? 'btn-success' : 'btn-outline-success'}`}
-                  onClick={() => handleFavorite(photo)}
-                >
-                  {favorites.some((f) => f.id === photo.id) ? "✅ Remove from favorites" : "🤍 Add to favorites"}
-                </button>
+  return (
+    <div className="container mx-auto px-4 py-8 max-w-6xl">
+      {/* Back Button */}
+      <Button variant="ghost" asChild className="mb-6">
+        <Link to={`/users/${user.id}/albums`} className="flex items-center gap-2">
+          <ArrowLeft className="h-4 w-4" />
+          Back to Albums
+        </Link>
+      </Button>
+
+      {/* Album Header */}
+      <Card className="mb-8 border-0 shadow-lg">
+        <CardHeader>
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full">
+              <Camera className="h-6 w-6 text-white" />
+            </div>
+            <div className="flex-1">
+              <CardTitle className="text-3xl font-bold leading-tight mb-2">
+                {album.title}
+              </CardTitle>
+              <div className="flex items-center gap-2 text-gray-600">
+                <User className="h-4 w-4" />
+                <span>
+                  by <Link 
+                    to={`/users/${user.id}`} 
+                    className="text-purple-600 hover:text-purple-800 transition-colors font-medium"
+                  >
+                    {user.name}
+                  </Link> (@{user.username})
+                </span>
               </div>
             </div>
+            <div className="text-right">
+              <p className="text-2xl font-bold text-purple-600">{photos.length}</p>
+              <p className="text-sm text-gray-500">photos</p>
+            </div>
           </div>
-        ))}
+        </CardHeader>
+      </Card>
+
+      {/* Photos Grid */}
+      <div className="space-y-6">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg">
+            <Image className="h-5 w-5 text-white" />
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900">Photos</h3>
+            <p className="text-gray-600">Beautiful memories captured</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {photos.map((photo) => (
+            <Card key={photo.id} className="group overflow-hidden hover:shadow-xl transition-all duration-300 border-0 shadow-md hover:scale-[1.02]">
+              <div className="aspect-square relative overflow-hidden bg-gray-100">
+                <img 
+                  src={photo.thumbnailUrl || `https://picsum.photos/150/150?random=${photo.id}`} 
+                  alt={photo.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = `https://picsum.photos/150/150?random=${photo.id}`;
+                  }}
+                />
+                <div className="absolute top-2 right-2 z-10">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleFavorite(photo)}
+                    className={`h-8 w-8 p-0 rounded-full bg-white/80 backdrop-blur-sm hover:bg-white/90 ${
+                      isFavorited(photo.id) ? 'text-red-500' : 'text-gray-600'
+                    }`}
+                  >
+                    <Heart className={`h-4 w-4 ${isFavorited(photo.id) ? 'fill-current' : ''}`} />
+                  </Button>
+                </div>
+              </div>
+              
+              <CardContent className="p-4">
+                <CardDescription className="text-sm text-gray-700 leading-relaxed line-clamp-2">
+                  {photo.title}
+                </CardDescription>
+                
+                                 <div className="flex items-center justify-end mt-3">
+                   <Button
+                     variant={isFavorited(photo.id) ? "destructive" : "outline"}
+                     size="sm"
+                     onClick={() => handleFavorite(photo)}
+                     className="h-7 px-3 text-xs"
+                   >
+                     {isFavorited(photo.id) ? "❤️" : "🤍"}
+                   </Button>
+                 </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {photos.length === 0 && (
+          <Card className="text-center py-12">
+            <CardContent>
+              <Image className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+              <CardTitle className="text-xl text-gray-600 mb-2">No Photos Found</CardTitle>
+              <CardDescription>This album doesn't contain any photos yet.</CardDescription>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );

@@ -2,6 +2,9 @@
 import type { LoaderFunctionArgs } from "react-router-dom";
 import { useLoaderData, Link } from "react-router-dom";
 import { useStore } from "../store/Store";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Heart, User, MessageCircle, ArrowLeft, Mail } from "lucide-react";
 
 interface PostParams {
     id: number;
@@ -61,41 +64,111 @@ function PostDetailPage() {
         }
     };
 
-    return (
-        <div className="container mt-4">
-            <div className="card mb-4">
-                <div className="card-body">
-                    <h2 className="card-title">{post.title}</h2>
-                    <p className="card-text">{post.body}</p>
-                    <div className="d-flex justify-content-between align-items-center">
-                        <small className="text-muted">
-                            by <Link to={`/users/${user.id}`} className="text-decoration-none">
-                                {user.name} (@{user.username})
-                            </Link>
-                        </small>
-                        <button 
-                            className={`btn btn-sm ${favoritePosts.some((f) => f.id === post.id) ? 'btn-danger' : 'btn-outline-danger'}`}
-                            onClick={handleFavoritePost}
-                        >
-                            {favoritePosts.some((f) => f.id === post.id) ? "❤️ Remove from favorites" : "🤍 Add to favorites"}
-                        </button>
-                    </div>
-                </div>
-            </div>
+    const isFavorited = favoritePosts.some((f) => f.id === post.id);
 
-            <h3>Comments</h3>
-            <div className="row">
-                {comments.map((comment) => (
-                    <div key={comment.id} className="col-12 mb-3">
-                        <div className="card">
-                            <div className="card-body">
-                                <h6 className="card-title">{comment.name}</h6>
-                                <p className="card-text">{comment.body}</p>
-                                <small className="text-muted">by {comment.email}</small>
+    return (
+        <div className="container mx-auto px-4 py-8 max-w-4xl">
+            {/* Back Button */}
+            <Button variant="ghost" asChild className="mb-6">
+                <Link to={`/users/${user.id}/posts`} className="flex items-center gap-2">
+                    <ArrowLeft className="h-4 w-4" />
+                    Back to Posts
+                </Link>
+            </Button>
+
+            {/* Post Content */}
+            <Card className="mb-8 border-0 shadow-lg">
+                <CardHeader>
+                    <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                            <CardTitle className="text-3xl font-bold leading-tight mb-4">
+                                {post.title}
+                            </CardTitle>
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full">
+                                    <User className="h-4 w-4 text-white" />
+                                </div>
+                                <div>
+                                    <p className="font-medium">
+                                        <Link 
+                                            to={`/users/${user.id}`} 
+                                            className="text-blue-600 hover:text-blue-800 transition-colors"
+                                        >
+                                            {user.name}
+                                        </Link>
+                                    </p>
+                                    <p className="text-sm text-gray-500">@{user.username}</p>
+                                </div>
                             </div>
                         </div>
+                        <Button
+                            variant={isFavorited ? "destructive" : "outline"}
+                            onClick={handleFavoritePost}
+                            className="flex items-center gap-2"
+                        >
+                            <Heart className={`h-4 w-4 ${isFavorited ? 'fill-current' : ''}`} />
+                            {isFavorited ? "Favorited" : "Add to Favorites"}
+                        </Button>
                     </div>
-                ))}
+                </CardHeader>
+                <CardContent>
+                    <div className="prose prose-lg max-w-none">
+                        <p className="text-gray-700 leading-relaxed text-lg">
+                            {post.body}
+                        </p>
+                    </div>
+                </CardContent>
+            </Card>
+
+            {/* Comments Section */}
+            <div className="space-y-6">
+                <div className="flex items-center gap-3">
+                    <div className="p-2 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg">
+                        <MessageCircle className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                        <h3 className="text-2xl font-bold text-gray-900">Comments</h3>
+                        <p className="text-gray-600">{comments.length} responses</p>
+                    </div>
+                </div>
+
+                <div className="space-y-4">
+                    {comments.map((comment) => (
+                        <Card key={comment.id} className="border-l-4 border-l-blue-500 hover:shadow-md transition-shadow">
+                            <CardHeader className="pb-3">
+                                <div className="flex items-start gap-3">
+                                    <div className="p-2 bg-gray-100 rounded-full">
+                                        <Mail className="h-4 w-4 text-gray-600" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <CardTitle className="text-lg font-semibold text-gray-900">
+                                            {comment.name}
+                                        </CardTitle>
+                                        <CardDescription className="flex items-center gap-1 mt-1">
+                                            <Mail className="h-3 w-3" />
+                                            {comment.email}
+                                        </CardDescription>
+                                    </div>
+                                </div>
+                            </CardHeader>
+                            <CardContent className="pt-0">
+                                <p className="text-gray-700 leading-relaxed">
+                                    {comment.body}
+                                </p>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
+
+                {comments.length === 0 && (
+                    <Card className="text-center py-12">
+                        <CardContent>
+                            <MessageCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                            <CardTitle className="text-xl text-gray-600 mb-2">No Comments Yet</CardTitle>
+                            <CardDescription>Be the first to share your thoughts on this post!</CardDescription>
+                        </CardContent>
+                    </Card>
+                )}
             </div>
         </div>
     );

@@ -1,27 +1,64 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 import { useStore } from '../store/Store';
+import { Home, Users, Heart } from 'lucide-react';
 
 function NavigationBar() {
   const { favorites, favoritePosts } = useStore();
   const totalFavorites = favorites.length + favoritePosts.length;
   
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
-      <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link as={Link} to="/">Home</Nav.Link>
-            <Nav.Link as={Link} to="/users">Users</Nav.Link>
-            <Nav.Link as={Link} to="/favorites">Favorites ({totalFavorites})</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    <nav className="bg-white border-b shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              UserScope
+            </Link>
+          </div>
+
+          {/* Navigation Links */}
+          <div className="hidden md:block">
+            <div className="ml-10 flex items-baseline space-x-4">
+              <Button variant="ghost" asChild>
+                <Link to="/" className="flex items-center gap-2">
+                  <Home size={18} />
+                  Home
+                </Link>
+              </Button>
+              
+              <Button variant="ghost" asChild>
+                <Link to="/users" className="flex items-center gap-2">
+                  <Users size={18} />
+                  Users
+                </Link>
+              </Button>
+              
+              <Button variant="ghost" asChild>
+                <Link to="/favorites" className="flex items-center gap-2">
+                  <Heart size={18} />
+                  Favorites {totalFavorites > 0 && (
+                    <span className="bg-red-500 text-white text-xs rounded-full px-2 py-1 ml-1">
+                      {totalFavorites}
+                    </span>
+                  )}
+                </Link>
+              </Button>
+            </div>
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <Button variant="ghost" size="sm">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </nav>
   );
 }
 

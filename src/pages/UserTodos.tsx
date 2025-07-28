@@ -1,5 +1,8 @@
 import { useLoaderData } from 'react-router-dom'
 import type { LoaderFunctionArgs } from 'react-router-dom'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { CheckCircle, Clock, ListTodo } from "lucide-react";
 
 interface TodoParams {
   id: number;
@@ -24,38 +27,86 @@ export const userTodosLoader = async ({ params }: LoaderFunctionArgs) => {
 
 function UserTodos() {
   const todos = useLoaderData() as TodoParams[];
+  
+  const completedTodos = todos.filter(todo => todo.completed);
 
   return (
-    <>
-      <h2>Todos</h2>
-      <div className="row">
+    <div className="space-y-6">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg">
+          <ListTodo className="h-5 w-5 text-white" />
+        </div>
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900">Todos</h2>
+          <p className="text-gray-600">
+            {completedTodos.length} of {todos.length} tasks completed
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {todos.map((todo) => (
-          <div key={todo.id} className="col-md-6 mb-3">
-            <div className={`card ${todo.completed ? 'border-success' : 'border-warning'}`}>
-              <div className="card-body">
-                <h6 className="card-title">
+          <Card 
+            key={todo.id} 
+            className={`group hover:shadow-xl transition-all duration-300 border-0 shadow-md hover:scale-[1.02] ${
+              todo.completed 
+                ? 'border-l-4 border-l-green-500 bg-green-50/50' 
+                : 'border-l-4 border-l-amber-500 bg-amber-50/50'
+            }`}
+          >
+            <CardHeader className="pb-3">
+              <div className="flex items-start gap-3">
+                <div className={`p-2 rounded-full flex-shrink-0 ${
+                  todo.completed 
+                    ? 'bg-green-500' 
+                    : 'bg-amber-500'
+                }`}>
                   {todo.completed ? (
-                    <span className="text-success">
-                      ✅ {todo.title}
-                    </span>
+                    <CheckCircle className="h-4 w-4 text-white" />
                   ) : (
-                    <span className="text-warning">
-                      ⏳ {todo.title}
-                    </span>
+                    <Clock className="h-4 w-4 text-white" />
                   )}
-                </h6>
-                <small className="text-muted">
-                  Status: {todo.completed ? 'Completed' : 'Pending'}
-                </small>
+                </div>
+                
+                <div className="flex-1">
+                  <CardTitle className={`text-lg leading-tight ${
+                    todo.completed 
+                      ? 'text-green-800 line-through' 
+                      : 'text-gray-900'
+                  }`}>
+                    {todo.title}
+                  </CardTitle>
+                  
+                  <div className="flex items-center gap-2 mt-2">
+                    <Badge 
+                      variant={todo.completed ? "default" : "secondary"}
+                      className={`text-xs ${
+                        todo.completed 
+                          ? 'bg-green-500 hover:bg-green-600' 
+                          : 'bg-amber-500 hover:bg-amber-600 text-white'
+                      }`}
+                    >
+                      {todo.completed ? '✅ Completed' : '⏳ Pending'}
+                    </Badge>
+                    <span className="text-xs text-gray-500">Task #{todo.id}</span>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            </CardHeader>
+          </Card>
         ))}
       </div>
+
       {todos.length === 0 && (
-        <p className="text-muted">No todos found for this user.</p>
+        <Card className="text-center py-12">
+          <CardContent>
+            <ListTodo className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+            <CardTitle className="text-xl text-gray-600 mb-2">No Todos Found</CardTitle>
+            <CardDescription>This user doesn't have any tasks yet.</CardDescription>
+          </CardContent>
+        </Card>
       )}
-    </>
+    </div>
   );
 }
 

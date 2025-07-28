@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client'
 import { RouterProvider, } from 'react-router-dom'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import './index.css'
 import { router } from './Routes'
 
 
