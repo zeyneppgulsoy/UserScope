@@ -66,7 +66,7 @@ function AlbumDetailPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-blue-950 transition-colors duration-300">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
+      <div className="container mx-auto px-4 py-6 sm:py-8 max-w-6xl">
       {/* Back Button */}
       <Button variant="ghost" asChild className="mb-6 dark:text-blue-300 dark:hover:bg-blue-900">
         <Link to={`/users/${user.id}/albums`} className="flex items-center gap-2">
@@ -78,28 +78,30 @@ function AlbumDetailPage() {
       {/* Album Header */}
       <Card className="mb-8 border-0 shadow-lg">
         <CardHeader>
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex-shrink-0">
               <Camera className="h-6 w-6 text-white" />
             </div>
-            <div className="flex-1">
-              <CardTitle className="text-3xl font-bold leading-tight mb-2">
+            <div className="flex-1 min-w-0">
+              <CardTitle className="text-2xl sm:text-3xl font-bold leading-tight mb-2 break-words">
                 {album.title}
               </CardTitle>
-              <div className="flex items-center gap-2 text-gray-600">
-                <User className="h-4 w-4" />
-                <span>
-                  by <Link 
-                    to={`/users/${user.id}`} 
-                    className="text-purple-600 hover:text-purple-800 transition-colors font-medium"
-                  >
-                    {user.name}
-                  </Link> (@{user.username})
-                </span>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-gray-600">
+                <div className="flex items-center gap-1">
+                  <User className="h-4 w-4 flex-shrink-0" />
+                  <span className="text-sm sm:text-base">by</span>
+                </div>
+                <Link 
+                  to={`/users/${user.id}`} 
+                  className="text-purple-600 hover:text-purple-800 transition-colors font-medium text-sm sm:text-base truncate"
+                >
+                  {user.name}
+                </Link>
+                <span className="text-sm sm:text-base text-gray-500">(@{user.username})</span>
               </div>
             </div>
-            <div className="text-right">
-              <p className="text-2xl font-bold text-purple-600">{photos.length}</p>
+            <div className="text-center sm:text-right bg-purple-50 dark:bg-purple-900/20 rounded-lg p-3 w-full sm:w-auto">
+              <p className="text-xl sm:text-2xl font-bold text-purple-600">{photos.length}</p>
               <p className="text-sm text-gray-500">photos</p>
             </div>
           </div>

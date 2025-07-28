@@ -68,7 +68,7 @@ function PostDetailPage() {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-blue-950 transition-colors duration-300">
-            <div className="container mx-auto px-4 py-8 max-w-4xl">
+            <div className="container mx-auto px-4 py-6 sm:py-8 max-w-4xl">
                 {/* Back Button */}
                                  <Button variant="ghost" asChild className="mb-6 dark:text-blue-300 dark:hover:bg-blue-900">
                      <Link to={`/users/${user.id}/posts`} className="flex items-center gap-2">
@@ -80,37 +80,37 @@ function PostDetailPage() {
             {/* Post Content */}
             <Card className="mb-8 border-0 shadow-lg bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm dark:border dark:border-blue-600/60">
                 <CardHeader>
-                    <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                            <CardTitle className="text-3xl font-bold leading-tight mb-4 dark:text-gray-50">
-                                {post.title}
-                            </CardTitle>
-                            <div className="flex items-center gap-3">
-                                <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-400 dark:to-purple-400 rounded-full">
-                                    <User className="h-4 w-4 text-white" />
-                                </div>
-                                <div>
-                                    <p className="font-medium">
-                                        <Link 
-                                            to={`/users/${user.id}`} 
-                                            className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
-                                        >
-                                            {user.name}
-                                        </Link>
-                                    </p>
-                                    <p className="text-sm text-gray-500 dark:text-gray-300">@{user.username}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <Button
-                            variant={isFavorited ? "destructive" : "outline"}
-                            onClick={handleFavoritePost}
-                            className="flex items-center gap-2 dark:border-gray-500 dark:text-gray-100 dark:hover:bg-blue-600"
-                        >
-                            <Heart className={`h-4 w-4 ${isFavorited ? 'fill-current' : ''}`} />
-                            {isFavorited ? "Favorited" : "Add to Favorites"}
-                        </Button>
-                    </div>
+                                         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                         <div className="flex-1 min-w-0">
+                             <CardTitle className="text-2xl sm:text-3xl font-bold leading-tight mb-4 dark:text-gray-50 break-words">
+                                 {post.title}
+                             </CardTitle>
+                             <div className="flex items-center gap-3">
+                                 <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-400 dark:to-purple-400 rounded-full">
+                                     <User className="h-4 w-4 text-white" />
+                                 </div>
+                                 <div>
+                                     <p className="font-medium">
+                                         <Link 
+                                             to={`/users/${user.id}`} 
+                                             className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+                                         >
+                                             {user.name}
+                                         </Link>
+                                     </p>
+                                     <p className="text-sm text-gray-500 dark:text-gray-300">@{user.username}</p>
+                                 </div>
+                             </div>
+                         </div>
+                         <Button
+                             variant={isFavorited ? "destructive" : "outline"}
+                             onClick={handleFavoritePost}
+                             className="flex items-center justify-center gap-2 w-full sm:w-auto dark:border-gray-500 dark:text-gray-100 dark:hover:bg-blue-600"
+                         >
+                             <Heart className={`h-4 w-4 ${isFavorited ? 'fill-current' : ''}`} />
+                             {isFavorited ? "Favorited" : "Add to Favorites"}
+                         </Button>
+                     </div>
                 </CardHeader>
                                                                    <CardContent>
                       <div className="prose prose-lg max-w-none">
