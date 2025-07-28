@@ -39,42 +39,44 @@ function UserDetailPage() {
     };
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            {/* User Info Card */}
-            <Card className="mb-8">
-                <CardHeader>
-                    <div className="flex items-center gap-4">
-                        <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full">
-                            <User className="h-6 w-6 text-white" />
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-blue-950 transition-colors duration-300">
+            <div className="container mx-auto px-4 py-8">
+                {/* User Info Card */}
+                <Card className="mb-8 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm dark:border dark:border-blue-700/50">
+                    <CardHeader>
+                        <div className="flex items-center gap-4">
+                            <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-400 dark:to-purple-400 rounded-full">
+                                <User className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                                <CardTitle className="text-2xl dark:text-blue-100">{user.name}</CardTitle>
+                                <CardDescription className="flex items-center gap-4 mt-2 dark:text-blue-200">
+                                    <span className="flex items-center gap-1">
+                                        <AtSign className="h-4 w-4" />
+                                        {user.username}
+                                    </span>
+                                    <span className="flex items-center gap-1">
+                                        <Mail className="h-4 w-4" />
+                                        {user.email}
+                                    </span>
+                                </CardDescription>
+                            </div>
                         </div>
-                        <div>
-                            <CardTitle className="text-2xl">{user.name}</CardTitle>
-                            <CardDescription className="flex items-center gap-4 mt-2">
-                                <span className="flex items-center gap-1">
-                                    <AtSign className="h-4 w-4" />
-                                    {user.username}
-                                </span>
-                                <span className="flex items-center gap-1">
-                                    <Mail className="h-4 w-4" />
-                                    {user.email}
-                                </span>
-                            </CardDescription>
-                        </div>
-                    </div>
-                </CardHeader>
-            </Card>
+                    </CardHeader>
+                </Card>
             
             {/* Tabs */}
             <Tabs value={getActiveTab()} onValueChange={handleTabSelect} className="w-full">
-                <TabsList className="grid w-full grid-cols-3">
-                    <TabsTrigger value="posts">Posts</TabsTrigger>
-                    <TabsTrigger value="albums">Albums</TabsTrigger>
-                    <TabsTrigger value="todos">Todos</TabsTrigger>
+                <TabsList className="grid w-full grid-cols-3 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm dark:border dark:border-blue-700/50">
+                    <TabsTrigger value="posts" className="dark:text-blue-200 dark:data-[state=active]:bg-blue-600 dark:data-[state=active]:text-white">Posts</TabsTrigger>
+                    <TabsTrigger value="albums" className="dark:text-blue-200 dark:data-[state=active]:bg-blue-600 dark:data-[state=active]:text-white">Albums</TabsTrigger>
+                    <TabsTrigger value="todos" className="dark:text-blue-200 dark:data-[state=active]:bg-blue-600 dark:data-[state=active]:text-white">Todos</TabsTrigger>
                 </TabsList>
                 <TabsContent value={getActiveTab()} className="mt-6">
                     <Outlet />
                 </TabsContent>
             </Tabs>
+            </div>
         </div>
     );
 }

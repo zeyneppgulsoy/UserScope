@@ -44,22 +44,22 @@ function UserPosts() {
             {!isPostDetailView && (
             <div className="space-y-6">
                 <div className="flex items-center gap-3 mb-6">
-                    <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
+                    <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 dark:from-emerald-400 dark:to-teal-400 rounded-lg">
                         <FileText className="h-5 w-5 text-white" />
                     </div>
                     <div>
-                        <h2 className="text-2xl font-bold text-gray-900">Posts</h2>
-                        <p className="text-gray-600">{posts.length} posts published</p>
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-50">Posts</h2>
+                        <p className="text-gray-600 dark:text-gray-100 font-medium">{posts.length} posts published</p>
                     </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {posts.map((post) => (
-                        <Card key={post.id} className="group hover:shadow-xl transition-all duration-300 border-0 shadow-md hover:scale-[1.02]">
+                        <Card key={post.id} className="group hover:shadow-xl transition-all duration-300 border-0 shadow-md hover:scale-[1.02] bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm dark:border dark:border-blue-600/60">
                             <CardHeader className="pb-3">
                                 <div className="flex items-start justify-between">
                                     <div className="flex-1">
-                                        <CardTitle className="text-lg leading-tight hover:text-blue-600 transition-colors">
+                                        <CardTitle className="text-lg leading-tight hover:text-blue-600 dark:hover:text-blue-400 transition-colors dark:text-gray-50 font-semibold">
                                             <Link 
                                                 to={`/users/${post.userId}/posts/${post.id}`}
                                                 className="line-clamp-2"
@@ -68,8 +68,8 @@ function UserPosts() {
                                             </Link>
                                         </CardTitle>
                                         <div className="flex items-center gap-2 mt-2">
-                                            <div className="p-1 bg-gray-100 rounded-full">
-                                                <User className="h-3 w-3 text-gray-600" />
+                                            <div className="p-1 bg-gray-100 dark:bg-gray-600 rounded-full">
+                                                <User className="h-3 w-3 text-gray-600 dark:text-gray-200" />
                                             </div>
                                         </div>
                                     </div>
@@ -77,7 +77,7 @@ function UserPosts() {
                                         variant="ghost"
                                         size="sm"
                                         onClick={() => handleFavoritePost(post)}
-                                        className={`ml-2 h-8 w-8 p-0 ${isFavorited(post.id) ? 'text-red-500 hover:text-red-600' : 'text-gray-400 hover:text-red-500'}`}
+                                        className={`ml-2 h-8 w-8 p-0 ${isFavorited(post.id) ? 'text-red-500 hover:text-red-600' : 'text-gray-400 dark:text-gray-200 hover:text-red-500'}`}
                                     >
                                         <Heart className={`h-4 w-4 ${isFavorited(post.id) ? 'fill-current' : ''}`} />
                                     </Button>
@@ -85,7 +85,7 @@ function UserPosts() {
                             </CardHeader>
                             
                             <CardContent className="pt-0">
-                                <CardDescription className="text-sm text-gray-600 leading-relaxed mb-4 line-clamp-3">
+                                <CardDescription className="text-sm text-gray-600 dark:text-gray-100 leading-relaxed mb-4 line-clamp-3 font-medium">
                                     {post.body}
                                 </CardDescription>
                                 
@@ -94,7 +94,7 @@ function UserPosts() {
                                         variant="outline" 
                                         size="sm" 
                                         asChild
-                                        className="group-hover:bg-blue-500 group-hover:text-white transition-all duration-300"
+                                        className="group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 dark:bg-blue-600 dark:text-white dark:border-blue-600 dark:hover:bg-blue-700 font-medium"
                                     >
                                         <Link to={`/users/${post.userId}/posts/${post.id}`} className="flex items-center gap-2">
                                             Read More
@@ -106,7 +106,7 @@ function UserPosts() {
                                         variant={isFavorited(post.id) ? "destructive" : "ghost"}
                                         size="sm"
                                         onClick={() => handleFavoritePost(post)}
-                                        className="flex items-center gap-2"
+                                        className="flex items-center gap-2 dark:text-gray-100 font-medium"
                                     >
                                         <Heart className={`h-4 w-4 ${isFavorited(post.id) ? 'fill-current' : ''}`} />
                                         {isFavorited(post.id) ? "Favorited" : "Add to Favorites"}
@@ -117,15 +117,15 @@ function UserPosts() {
                     ))}
                 </div>
 
-                {posts.length === 0 && (
-                                         <Card className="text-center py-12">
-                         <CardContent>
-                             <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                             <CardTitle className="text-xl text-gray-600 mb-2">No Posts Found</CardTitle>
-                             <CardDescription>This user hasn't published any posts yet.</CardDescription>
-                         </CardContent>
-                     </Card>
-                 )}
+                                 {posts.length === 0 && (
+                                          <Card className="text-center py-12 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm dark:border dark:border-blue-600/60">
+                          <CardContent>
+                              <FileText className="h-12 w-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+                              <CardTitle className="text-xl text-gray-600 dark:text-gray-100 mb-2">No Posts Found</CardTitle>
+                              <CardDescription className="dark:text-gray-200">This user hasn't published any posts yet.</CardDescription>
+                          </CardContent>
+                      </Card>
+                  )}
              </div>
              )}
 

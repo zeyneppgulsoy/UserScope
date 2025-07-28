@@ -33,27 +33,27 @@ function UserTodos() {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg">
+        <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-indigo-400 dark:to-purple-400 rounded-lg">
           <ListTodo className="h-5 w-5 text-white" />
         </div>
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Todos</h2>
-          <p className="text-gray-600">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-blue-100">Todos</h2>
+          <p className="text-gray-600 dark:text-blue-200">
             {completedTodos.length} of {todos.length} tasks completed
           </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {todos.map((todo) => (
-          <Card 
-            key={todo.id} 
-            className={`group hover:shadow-xl transition-all duration-300 border-0 shadow-md hover:scale-[1.02] ${
-              todo.completed 
-                ? 'border-l-4 border-l-green-500 bg-green-50/50' 
-                : 'border-l-4 border-l-amber-500 bg-amber-50/50'
-            }`}
-          >
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+         {todos.map((todo) => (
+           <Card 
+             key={todo.id} 
+             className={`group hover:shadow-xl transition-all duration-300 border-0 shadow-md hover:scale-[1.02] bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm dark:border dark:border-blue-700/50 ${
+               todo.completed 
+                 ? 'border-l-4 border-l-green-500 bg-green-50/50 dark:bg-green-900/20' 
+                 : 'border-l-4 border-l-amber-500 bg-amber-50/50 dark:bg-amber-900/20'
+             }`}
+           >
             <CardHeader className="pb-3">
               <div className="flex items-start gap-3">
                 <div className={`p-2 rounded-full flex-shrink-0 ${
@@ -68,14 +68,14 @@ function UserTodos() {
                   )}
                 </div>
                 
-                <div className="flex-1">
-                  <CardTitle className={`text-lg leading-tight ${
-                    todo.completed 
-                      ? 'text-green-800 line-through' 
-                      : 'text-gray-900'
-                  }`}>
-                    {todo.title}
-                  </CardTitle>
+                                 <div className="flex-1">
+                   <CardTitle className={`text-lg leading-tight ${
+                     todo.completed 
+                       ? 'text-green-800 dark:text-green-400 line-through' 
+                       : 'text-gray-900 dark:text-white'
+                   }`}>
+                     {todo.title}
+                   </CardTitle>
                   
                   <div className="flex items-center gap-2 mt-2">
                     <Badge 
@@ -88,7 +88,7 @@ function UserTodos() {
                     >
                       {todo.completed ? '✅ Completed' : '⏳ Pending'}
                     </Badge>
-                    <span className="text-xs text-gray-500">Task #{todo.id}</span>
+                                         <span className="text-xs text-gray-500 dark:text-gray-400">Task #{todo.id}</span>
                   </div>
                 </div>
               </div>
